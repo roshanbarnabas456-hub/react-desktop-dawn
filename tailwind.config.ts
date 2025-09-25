@@ -47,6 +47,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        admin: {
+          header: "hsl(var(--admin-header))",
+          nav: "hsl(var(--admin-nav))",
+          sidebar: "hsl(var(--admin-sidebar))",
+          "table-header": "hsl(var(--admin-table-header))",
+          "row-hover": "hsl(var(--admin-row-hover))",
+          success: "hsl(var(--admin-success))",
+          warning: "hsl(var(--admin-warning))",
+          info: "hsl(var(--admin-info))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
