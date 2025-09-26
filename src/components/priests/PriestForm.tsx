@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -11,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CalendarDays, Phone, Mail, MapPin, User, GraduationCap } from "lucide-react";
+import { CalendarDays, Phone, Mail, MapPin, User, GraduationCap, Camera } from "lucide-react";
 
 export function PriestForm() {
   return (
@@ -25,11 +26,26 @@ export function PriestForm() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="sno">S.No</Label>
-              <Input id="sno" placeholder="002" defaultValue="002" />
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Profile Picture */}
+            <div className="flex flex-col items-center space-y-4">
+              <Avatar className="w-32 h-32 border-4 border-border">
+                <AvatarImage src="" alt="Priest Photo" />
+                <AvatarFallback className="bg-muted text-4xl">
+                  <Camera className="w-12 h-12 text-muted-foreground" />
+                </AvatarFallback>
+              </Avatar>
+              <Button variant="outline" size="sm" className="text-xs">
+                Upload Photo
+              </Button>
             </div>
+            
+            {/* Basic Information Fields */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="sno">S.No</Label>
+                <Input id="sno" placeholder="002" defaultValue="002" />
+              </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input id="name" placeholder="Fr. Thomas Cheruvally" defaultValue="Thomas Cheruvally" />
@@ -42,9 +58,10 @@ export function PriestForm() {
               <Label htmlFor="feast">Feast Day</Label>
               <Input id="feast" placeholder="03-Jul" defaultValue="03-Jul" />
             </div>
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="thomas.cheruvally@diocese.org" />
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="thomas.cheruvally@diocese.org" />
+              </div>
             </div>
           </div>
         </CardContent>
