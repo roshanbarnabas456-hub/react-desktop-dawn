@@ -3,6 +3,12 @@ import { Header } from "@/components/layout/Header";
 import { Navigation } from "@/components/layout/Navigation";
 import { PriestsList } from "@/components/priests/PriestsList";
 import { PriestForm } from "@/components/priests/PriestForm";
+import { AppointmentsView } from "@/components/appointments/AppointmentsView";
+import { FormationView } from "@/components/formation/FormationView";
+import { MedicalView } from "@/components/medical/MedicalView";
+import { AddressView } from "@/components/address/AddressView";
+import { RelationsView } from "@/components/relations/RelationsView";
+import { ParishView } from "@/components/parish/ParishView";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("browse");
@@ -14,17 +20,17 @@ const Index = () => {
       case "biodata":
         return <PriestForm />;
       case "formation":
-        return <PriestForm />;
+        return <FormationView />;
       case "appointments":
-        return <div className="p-8 text-center text-muted-foreground">Appointments management coming soon...</div>;
+        return <AppointmentsView />;
       case "medical":
-        return <div className="p-8 text-center text-muted-foreground">Medical records coming soon...</div>;
+        return <MedicalView />;
       case "address":
-        return <div className="p-8 text-center text-muted-foreground">Address management coming soon...</div>;
+        return <AddressView />;
       case "relations":
-        return <div className="p-8 text-center text-muted-foreground">Relations management coming soon...</div>;
+        return <RelationsView />;
       case "parish":
-        return <div className="p-8 text-center text-muted-foreground">Parish assignments coming soon...</div>;
+        return <ParishView />;
       default:
         return <PriestsList />;
     }
