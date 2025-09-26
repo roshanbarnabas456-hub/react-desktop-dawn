@@ -25,7 +25,7 @@ const navigationItems = [
   { id: "biodata", label: "BioData", icon: FileText },
   { id: "formation", label: "Formation", icon: GraduationCap },
   { id: "appointments", label: "Appointments", icon: Calendar },
-  { id: "medical", label: "Medical", icon: Heart },
+  
   { id: "address", label: "Address", icon: Home },
   { id: "relations", label: "Relations", icon: GitBranch },
   { id: "parish", label: "Parish", icon: Church },

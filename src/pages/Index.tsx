@@ -5,7 +5,7 @@ import { PriestsList } from "@/components/priests/PriestsList";
 import { PriestForm } from "@/components/priests/PriestForm";
 import { AppointmentsView } from "@/components/appointments/AppointmentsView";
 import { FormationView } from "@/components/formation/FormationView";
-import { MedicalView } from "@/components/medical/MedicalView";
+
 import { AddressView } from "@/components/address/AddressView";
 import { RelationsView } from "@/components/relations/RelationsView";
 import { ParishView } from "@/components/parish/ParishView";
@@ -23,8 +23,6 @@ const Index = () => {
         return <FormationView />;
       case "appointments":
         return <AppointmentsView />;
-      case "medical":
-        return <MedicalView />;
       case "address":
         return <AddressView />;
       case "relations":
