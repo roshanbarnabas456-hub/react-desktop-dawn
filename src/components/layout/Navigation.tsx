@@ -47,13 +47,12 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
               size="sm"
               onClick={() => onTabChange(item.id)}
               className={cn(
-                "flex items-center space-x-2",
+                "flex items-center",
                 activeTab === item.id 
                   ? "bg-primary text-primary-foreground" 
                   : "text-white hover:bg-white/10"
               )}
             >
-              <item.icon className="w-4 h-4" />
               <span>{item.label}</span>
             </Button>
           ))}
