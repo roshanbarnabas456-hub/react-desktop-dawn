@@ -37,7 +37,7 @@ const actionItems = [
 
 export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   return (
-    <nav className="bg-admin-nav p-4">
+    <nav className="bg-admin-nav px-4 py-4">
       <div className="flex items-center justify-between">
         <div className="flex space-x-2">
           {navigationItems.map((item) => (
