@@ -50,7 +50,12 @@ const mockPriests = [
   },
 ];
 
-export function PriestsList() {
+interface PriestsListProps {
+  onPriestSelect?: (priestId: string) => void;
+  onAddNew?: () => void;
+}
+
+export function PriestsList({ onPriestSelect, onAddNew }: PriestsListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPriest, setSelectedPriest] = useState<string | null>(null);
 
@@ -66,7 +71,7 @@ export function PriestsList() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Priests Directory</span>
-            <Button className="flex items-center space-x-2">
+            <Button className="flex items-center space-x-2" onClick={onAddNew}>
               <Plus className="w-4 h-4" />
               <span>Add New Priest</span>
             </Button>
@@ -115,7 +120,10 @@ export function PriestsList() {
                   className={`cursor-pointer hover:bg-admin-row-hover ${
                     selectedPriest === priest.id ? "bg-admin-row-hover" : ""
                   }`}
-                  onClick={() => setSelectedPriest(priest.id)}
+                  onClick={() => {
+                    setSelectedPriest(priest.id);
+                    onPriestSelect?.(priest.id);
+                  }}
                 >
                   <TableCell className="font-medium">{priest.id}</TableCell>
                   <TableCell className="font-semibold text-primary">{priest.name}</TableCell>

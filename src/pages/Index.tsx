@@ -12,13 +12,28 @@ import { ParishView } from "@/components/parish/ParishView";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("browse");
+  const [selectedPriest, setSelectedPriest] = useState<string | null>(null);
+  const [isNewPriest, setIsNewPriest] = useState(false);
 
   const renderContent = () => {
     switch (activeTab) {
       case "browse":
-        return <PriestsList />;
+        return (
+          <PriestsList 
+            onPriestSelect={(priestId) => {
+              setSelectedPriest(priestId);
+              setIsNewPriest(false);
+              setActiveTab("biodata");
+            }}
+            onAddNew={() => {
+              setSelectedPriest(null);
+              setIsNewPriest(true);
+              setActiveTab("biodata");
+            }}
+          />
+        );
       case "biodata":
-        return <PriestForm />;
+        return <PriestForm isNewPriest={isNewPriest} />;
       case "formation":
         return <FormationView />;
       case "appointments":

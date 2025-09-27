@@ -32,10 +32,7 @@ const navigationItems = [
 ];
 
 const actionItems = [
-  { id: "save", label: "Save", icon: Save, variant: "default" as const },
   { id: "print", label: "Print", icon: Printer, variant: "secondary" as const },
-  { id: "cancel", label: "Cancel", icon: X, variant: "outline" as const },
-  { id: "quit", label: "Quit", icon: LogOut, variant: "destructive" as const },
 ];
 
 export function Navigation({ activeTab, onTabChange }: NavigationProps) {

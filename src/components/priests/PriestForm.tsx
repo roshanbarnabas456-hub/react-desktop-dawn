@@ -14,7 +14,11 @@ import {
 } from "@/components/ui/select";
 import { CalendarDays, Phone, Mail, MapPin, User, GraduationCap, Camera } from "lucide-react";
 
-export function PriestForm() {
+interface PriestFormProps {
+  isNewPriest?: boolean;
+}
+
+export function PriestForm({ isNewPriest = false }: PriestFormProps) {
   return (
     <div className="space-y-6">
       {/* Basic Information */}
@@ -44,23 +48,23 @@ export function PriestForm() {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="sno">S.No</Label>
-                <Input id="sno" placeholder="002" defaultValue="002" />
+                <Input id="sno" placeholder="Enter S.No" defaultValue={isNewPriest ? "" : "002"} />
               </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Fr. Thomas Cheruvally" defaultValue="Thomas Cheruvally" />
+              <Input id="name" placeholder="Enter full name" defaultValue={isNewPriest ? "" : "Thomas Cheruvally"} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="birth">Birth Date</Label>
-              <Input id="birth" type="date" defaultValue="1934-05-18" />
+              <Input id="birth" type="date" defaultValue={isNewPriest ? "" : "1934-05-18"} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="feast">Feast Day</Label>
-              <Input id="feast" placeholder="03-Jul" defaultValue="03-Jul" />
+              <Input id="feast" placeholder="DD-MMM" defaultValue={isNewPriest ? "" : "03-Jul"} />
             </div>
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="thomas.cheruvally@diocese.org" />
+                <Input id="email" type="email" placeholder="Enter email address" defaultValue={isNewPriest ? "" : ""} />
               </div>
             </div>
           </div>
@@ -206,12 +210,6 @@ export function PriestForm() {
         </CardContent>
       </Card>
 
-      {/* Action Buttons */}
-      <div className="flex justify-end space-x-4">
-        <Button variant="outline">Cancel</Button>
-        <Button variant="secondary">Save Draft</Button>
-        <Button>Save & Continue</Button>
-      </div>
     </div>
   );
 }
