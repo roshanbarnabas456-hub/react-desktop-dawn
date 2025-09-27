@@ -14,6 +14,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("browse");
   const [selectedPriest, setSelectedPriest] = useState<string | null>(null);
   const [isNewPriest, setIsNewPriest] = useState(false);
+  const [editingPriest, setEditingPriest] = useState<any>(null);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -23,17 +24,24 @@ const Index = () => {
             onPriestSelect={(priestId) => {
               setSelectedPriest(priestId);
               setIsNewPriest(false);
+              setEditingPriest(null);
               setActiveTab("biodata");
             }}
             onAddNew={() => {
               setSelectedPriest(null);
               setIsNewPriest(true);
+              setEditingPriest(null);
+              setActiveTab("biodata");
+            }}
+            onPriestEdit={(priest) => {
+              setEditingPriest(priest);
+              setIsNewPriest(false);
               setActiveTab("biodata");
             }}
           />
         );
       case "biodata":
-        return <PriestForm isNewPriest={isNewPriest} />;
+        return <PriestForm isNewPriest={isNewPriest} priestData={editingPriest} />;
       case "formation":
         return <FormationView />;
       case "appointments":

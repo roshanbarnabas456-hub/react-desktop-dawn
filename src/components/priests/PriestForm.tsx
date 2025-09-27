@@ -16,9 +16,10 @@ import { CalendarDays, Phone, Mail, MapPin, User, GraduationCap, Camera } from "
 
 interface PriestFormProps {
   isNewPriest?: boolean;
+  priestData?: any;
 }
 
-export function PriestForm({ isNewPriest = false }: PriestFormProps) {
+export function PriestForm({ isNewPriest = false, priestData }: PriestFormProps) {
   return (
     <div className="space-y-6">
       {/* Basic Information */}
@@ -48,23 +49,23 @@ export function PriestForm({ isNewPriest = false }: PriestFormProps) {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="sno">S.No</Label>
-                <Input id="sno" placeholder="Enter S.No" defaultValue={isNewPriest ? "" : "002"} />
+                <Input id="sno" placeholder="Enter S.No" defaultValue={isNewPriest ? "" : (priestData?.id || "")} />
               </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Enter full name" defaultValue={isNewPriest ? "" : "Thomas Cheruvally"} />
+              <Input id="name" placeholder="Enter full name" defaultValue={isNewPriest ? "" : (priestData?.name || "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="birth">Birth Date</Label>
-              <Input id="birth" type="date" defaultValue={isNewPriest ? "" : "1934-05-18"} />
+              <Input id="birth" type="date" defaultValue={isNewPriest ? "" : (priestData?.birth ? new Date(priestData.birth).toISOString().split('T')[0] : "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="feast">Feast Day</Label>
-              <Input id="feast" placeholder="DD-MMM" defaultValue={isNewPriest ? "" : "03-Jul"} />
+              <Input id="feast" placeholder="DD-MMM" defaultValue={isNewPriest ? "" : (priestData?.feast || "")} />
             </div>
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter email address" defaultValue={isNewPriest ? "" : ""} />
+                <Input id="email" type="email" placeholder="Enter email address" defaultValue={isNewPriest ? "" : (priestData?.email || "")} />
               </div>
             </div>
           </div>
@@ -100,11 +101,11 @@ export function PriestForm({ isNewPriest = false }: PriestFormProps) {
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" placeholder="(0612) 226248" defaultValue="(0612) 226248" />
+              <Input id="phone" placeholder="(0612) 226248" defaultValue={isNewPriest ? "" : (priestData?.phone || "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mobile1">Mobile 1</Label>
-              <Input id="mobile1" placeholder="9430007551" defaultValue="9430007551" />
+              <Input id="mobile1" placeholder="9430007551" defaultValue={isNewPriest ? "" : (priestData?.mobile || "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mobile2">Mobile 2</Label>

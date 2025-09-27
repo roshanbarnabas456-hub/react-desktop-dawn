@@ -53,9 +53,10 @@ const mockPriests = [
 interface PriestsListProps {
   onPriestSelect?: (priestId: string) => void;
   onAddNew?: () => void;
+  onPriestEdit?: (priest: any) => void;
 }
 
-export function PriestsList({ onPriestSelect, onAddNew }: PriestsListProps) {
+export function PriestsList({ onPriestSelect, onAddNew, onPriestEdit }: PriestsListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPriest, setSelectedPriest] = useState<string | null>(null);
 
@@ -146,7 +147,15 @@ export function PriestsList({ onPriestSelect, onAddNew }: PriestsListProps) {
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <Eye className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onPriestEdit?.(priest);
+                        }}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
                     </div>
