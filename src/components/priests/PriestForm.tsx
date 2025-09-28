@@ -6,27 +6,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarDays, Phone, Mail, MapPin, User, GraduationCap, Camera, Save } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-
 interface PriestFormProps {
   isNewPriest?: boolean;
   priestData?: any;
   onSaved?: () => void;
 }
-
-export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestFormProps) {
-  const { toast } = useToast();
+export function PriestForm({
+  isNewPriest = false,
+  priestData,
+  onSaved
+}: PriestFormProps) {
+  const {
+    toast
+  } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     s_no: priestData?.s_no || "",
@@ -46,11 +44,12 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
     additional_address: priestData?.additional_address || "",
     additional_info: priestData?.additional_info || ""
   });
-
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   const handleSave = async () => {
     if (!formData.name) {
       toast({
@@ -60,34 +59,27 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
       });
       return;
     }
-
     setIsLoading(true);
     try {
       if (isNewPriest) {
-        const { error } = await supabase
-          .from('priests')
-          .insert([formData]);
-        
+        const {
+          error
+        } = await supabase.from('priests').insert([formData]);
         if (error) throw error;
-        
         toast({
           title: "Success",
           description: "Priest information saved successfully"
         });
       } else {
-        const { error } = await supabase
-          .from('priests')
-          .update(formData)
-          .eq('id', priestData?.id);
-        
+        const {
+          error
+        } = await supabase.from('priests').update(formData).eq('id', priestData?.id);
         if (error) throw error;
-        
         toast({
-          title: "Success", 
+          title: "Success",
           description: "Priest information updated successfully"
         });
       }
-      
       onSaved?.();
     } catch (error) {
       console.error('Error saving priest:', error);
@@ -100,8 +92,7 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
       setIsLoading(false);
     }
   };
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Basic Information */}
       <Card>
         <CardHeader>
@@ -129,49 +120,23 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="sno">S.No</Label>
-                <Input 
-                  id="sno" 
-                  placeholder="Enter S.No" 
-                  value={formData.s_no}
-                  onChange={(e) => handleInputChange('s_no', e.target.value)}
-                />
+                <Input id="sno" placeholder="Enter S.No" value={formData.s_no} onChange={e => handleInputChange('s_no', e.target.value)} />
               </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-               <Input 
-                 id="name" 
-                 placeholder="Enter full name" 
-                 value={formData.name}
-                 onChange={(e) => handleInputChange('name', e.target.value)}
-               />
+               <Input id="name" placeholder="Enter full name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="birth">Birth Date</Label>
-               <Input 
-                 id="birth" 
-                 type="date" 
-                 value={formData.birth_date}
-                 onChange={(e) => handleInputChange('birth_date', e.target.value)}
-               />
+               <Input id="birth" type="date" value={formData.birth_date} onChange={e => handleInputChange('birth_date', e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="feast">Feast Day</Label>
-               <Input 
-                 id="feast" 
-                 placeholder="DD-MMM" 
-                 value={formData.feast_day}
-                 onChange={(e) => handleInputChange('feast_day', e.target.value)}
-               />
+               <Input id="feast" placeholder="DD-MMM" value={formData.feast_day} onChange={e => handleInputChange('feast_day', e.target.value)} />
             </div>
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                 <Input 
-                   id="email" 
-                   type="email" 
-                   placeholder="Enter email address" 
-                   value={formData.email}
-                   onChange={(e) => handleInputChange('email', e.target.value)}
-                 />
+                 <Input id="email" type="email" placeholder="Enter email address" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} />
               </div>
             </div>
           </div>
@@ -190,10 +155,7 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="address">Address</Label>
-              <Select 
-                value={formData.address_id}
-                onValueChange={(value) => handleInputChange('address_id', value)}
-              >
+              <Select value={formData.address_id} onValueChange={value => handleInputChange('address_id', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select address" />
                 </SelectTrigger>
@@ -205,40 +167,20 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="prerana">Prerana</Label>
-               <Input 
-                 id="prerana" 
-                 placeholder="Prerana details" 
-                 value={formData.prerana}
-                 onChange={(e) => handleInputChange('prerana', e.target.value)}
-               />
+              <Label htmlFor="prerana">Personal</Label>
+               <Input id="prerana" placeholder="Prerana details" value={formData.prerana} onChange={e => handleInputChange('prerana', e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
-               <Input 
-                 id="phone" 
-                 placeholder="(0612) 226248" 
-                 value={formData.phone}
-                 onChange={(e) => handleInputChange('phone', e.target.value)}
-               />
+               <Input id="phone" placeholder="(0612) 226248" value={formData.phone} onChange={e => handleInputChange('phone', e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mobile1">Mobile 1</Label>
-               <Input 
-                 id="mobile1" 
-                 placeholder="9430007551" 
-                 value={formData.mobile_1}
-                 onChange={(e) => handleInputChange('mobile_1', e.target.value)}
-               />
+               <Input id="mobile1" placeholder="9430007551" value={formData.mobile_1} onChange={e => handleInputChange('mobile_1', e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mobile2">Mobile 2</Label>
-               <Input 
-                 id="mobile2" 
-                 placeholder="Mobile 2" 
-                 value={formData.mobile_2}
-                 onChange={(e) => handleInputChange('mobile_2', e.target.value)}
-               />
+               <Input id="mobile2" placeholder="Mobile 2" value={formData.mobile_2} onChange={e => handleInputChange('mobile_2', e.target.value)} />
             </div>
           </div>
         </CardContent>
@@ -258,42 +200,22 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
               <h4 className="font-semibold text-lg">Father</h4>
               <div className="space-y-2">
                 <Label htmlFor="father-name">Name</Label>
-                <Input 
-                  id="father-name" 
-                  placeholder="Father's name" 
-                  value={formData.father_name}
-                  onChange={(e) => handleInputChange('father_name', e.target.value)}
-                />
+                <Input id="father-name" placeholder="Father's name" value={formData.father_name} onChange={e => handleInputChange('father_name', e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="father-via">Via</Label>
-                <Input 
-                  id="father-via" 
-                  placeholder="Via" 
-                  value={formData.father_via}
-                  onChange={(e) => handleInputChange('father_via', e.target.value)}
-                />
+                <Input id="father-via" placeholder="Via" value={formData.father_via} onChange={e => handleInputChange('father_via', e.target.value)} />
               </div>
             </div>
             <div className="space-y-4">
               <h4 className="font-semibold text-lg">Mother</h4>
               <div className="space-y-2">
                 <Label htmlFor="mother-name">Name</Label>
-                <Input 
-                  id="mother-name" 
-                  placeholder="Mother's name" 
-                  value={formData.mother_name}
-                  onChange={(e) => handleInputChange('mother_name', e.target.value)}
-                />
+                <Input id="mother-name" placeholder="Mother's name" value={formData.mother_name} onChange={e => handleInputChange('mother_name', e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="mother-dv">DV</Label>
-                <Input 
-                  id="mother-dv" 
-                  placeholder="DV" 
-                  value={formData.mother_dv}
-                  onChange={(e) => handleInputChange('mother_dv', e.target.value)}
-                />
+                <Input id="mother-dv" placeholder="DV" value={formData.mother_dv} onChange={e => handleInputChange('mother_dv', e.target.value)} />
               </div>
             </div>
           </div>
@@ -301,23 +223,11 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="additional-address">Additional Address</Label>
-              <Textarea 
-                id="additional-address" 
-                placeholder="Additional address details"
-                value={formData.additional_address}
-                onChange={(e) => handleInputChange('additional_address', e.target.value)}
-                rows={3}
-              />
+              <Textarea id="additional-address" placeholder="Additional address details" value={formData.additional_address} onChange={e => handleInputChange('additional_address', e.target.value)} rows={3} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="additional-info">Additional Info</Label>
-              <Textarea 
-                id="additional-info" 
-                placeholder="Additional information"
-                value={formData.additional_info}
-                onChange={(e) => handleInputChange('additional_info', e.target.value)}
-                rows={3}
-              />
+              <Textarea id="additional-info" placeholder="Additional information" value={formData.additional_info} onChange={e => handleInputChange('additional_info', e.target.value)} rows={3} />
             </div>
           </div>
         </CardContent>
@@ -340,14 +250,32 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
               <div className="font-semibold">Status</div>
             </div>
             
-            {[
-              { stage: "Minor Seminary", institute: "Mission Home, Palai", year: "1950", status: "Completed" },
-              { stage: "Philosophy", institute: "St. Joseph's Mangalon", year: "1951", status: "Completed" },
-              { stage: "Regency I", institute: "Jehanabad", year: "1954", status: "Completed" },
-              { stage: "Regency II", institute: "Maner", year: "1955", status: "Completed" },
-              { stage: "Theology", institute: "St. Joseph's Mangalon", year: "1956", status: "Completed" },
-            ].map((item, index) => (
-              <div key={index} className="grid grid-cols-4 gap-4 p-3 hover:bg-admin-row-hover rounded-md border">
+            {[{
+            stage: "Minor Seminary",
+            institute: "Mission Home, Palai",
+            year: "1950",
+            status: "Completed"
+          }, {
+            stage: "Philosophy",
+            institute: "St. Joseph's Mangalon",
+            year: "1951",
+            status: "Completed"
+          }, {
+            stage: "Regency I",
+            institute: "Jehanabad",
+            year: "1954",
+            status: "Completed"
+          }, {
+            stage: "Regency II",
+            institute: "Maner",
+            year: "1955",
+            status: "Completed"
+          }, {
+            stage: "Theology",
+            institute: "St. Joseph's Mangalon",
+            year: "1956",
+            status: "Completed"
+          }].map((item, index) => <div key={index} className="grid grid-cols-4 gap-4 p-3 hover:bg-admin-row-hover rounded-md border">
                 <div className="font-medium">{item.stage}</div>
                 <div>{item.institute}</div>
                 <div>{item.year}</div>
@@ -356,24 +284,18 @@ export function PriestForm({ isNewPriest = false, priestData, onSaved }: PriestF
                     {item.status}
                   </Badge>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </CardContent>
       </Card>
 
       {/* Save Button */}
       <div className="flex justify-end space-x-4">
-        <Button 
-          onClick={handleSave} 
-          disabled={isLoading}
-          className="min-w-32"
-        >
+        <Button onClick={handleSave} disabled={isLoading} className="min-w-32">
           <Save className="w-4 h-4 mr-2" />
           {isLoading ? "Saving..." : "Save Priest"}
         </Button>
       </div>
 
-    </div>
-  );
+    </div>;
 }
