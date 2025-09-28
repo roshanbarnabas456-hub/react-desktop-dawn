@@ -11,17 +11,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, Filter, Edit, Eye } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Plus, Search, Filter, Edit, Eye, ChevronDown } from "lucide-react";
 
 // Mock data for demonstration
 const mockPriests = [
   {
     id: "002",
     name: "Thomas Cheruvally",
+    title: "Father",
     birth: "18-May-1934",
+    birthday: 1934,
+    born: 5, // May
     feast: "03-Jul",
     email: "thomas.cheruvally@diocese.org",
     address: "Kurji - Pre",
+    home: "Kurji",
+    parish: "St. Mary's",
+    bloodType: "O+",
     phone: "(0612) 226248",
     mobile: "9430007551",
     status: "Active"
@@ -29,10 +41,16 @@ const mockPriests = [
   {
     id: "003",
     name: "Lt Mathew",
+    title: "Father",
     birth: "15-Mar-1940",
+    birthday: 1940,
+    born: 3, // March
     feast: "21-Sep",
     email: "mathew.lt@diocese.org",
     address: "Vakakiad",
+    home: "Vakakiad",
+    parish: "Holy Cross",
+    bloodType: "A+",
     phone: "(0612) 445623",
     mobile: "9234567890",
     status: "Deceased"
@@ -40,15 +58,23 @@ const mockPriests = [
   {
     id: "004",
     name: "Joseph Thuruthyil",
+    title: "Monsignor",
     birth: "22-Aug-1945",
+    birthday: 1945,
+    born: 8, // August
     feast: "19-Mar",
     email: "joseph.t@diocese.org",
     address: "Vellathuval",
+    home: "Vellathuval",
+    parish: "Sacred Heart",
+    bloodType: "B+",
     phone: "(0612) 334521",
     mobile: "9876543210",
     status: "Active"
   },
 ];
+
+type SortField = 'name' | 'title' | 'bloodType' | 'birthday' | 'born' | 'home' | 'parish';
 
 interface PriestsListProps {
   onPriestSelect?: (priestId: string) => void;
@@ -59,11 +85,31 @@ interface PriestsListProps {
 export function PriestsList({ onPriestSelect, onAddNew, onPriestEdit }: PriestsListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPriest, setSelectedPriest] = useState<string | null>(null);
+  const [sortField, setSortField] = useState<SortField>('name');
 
-  const filteredPriests = mockPriests.filter(priest =>
-    priest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    priest.id.includes(searchTerm)
-  );
+  const getSortedPriests = () => {
+    const filtered = mockPriests.filter(priest =>
+      priest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      priest.id.includes(searchTerm)
+    );
+
+    return filtered.sort((a, b) => {
+      const aValue = a[sortField];
+      const bValue = b[sortField];
+      
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return aValue.localeCompare(bValue);
+      }
+      
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return aValue - bValue;
+      }
+      
+      return 0;
+    });
+  };
+
+  const filteredPriests = getSortedPriests();
 
   return (
     <div className="space-y-6">
@@ -89,9 +135,38 @@ export function PriestsList({ onPriestSelect, onAddNew, onPriestEdit }: PriestsL
                 className="pl-10"
               />
             </div>
-            <Button variant="outline" size="icon">
-              <Filter className="w-4 h-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center space-x-2">
+                  <Filter className="w-4 h-4" />
+                  <span className="capitalize">Sort by {sortField}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setSortField('name')}>
+                  Sort by Name
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('title')}>
+                  Sort by Title
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('bloodType')}>
+                  Sort by Blood Type
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('birthday')}>
+                  Sort by Birth Year
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('born')}>
+                  Sort by Birth Month
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('home')}>
+                  Sort by Home
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortField('parish')}>
+                  Sort by Parish
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </CardContent>
       </Card>
