@@ -41,7 +41,18 @@ const Index = () => {
           />
         );
       case "biodata":
-        return <PriestForm isNewPriest={isNewPriest} priestData={editingPriest} />;
+        return (
+          <PriestForm 
+            isNewPriest={isNewPriest} 
+            priestData={editingPriest} 
+            onSaved={() => {
+              setActiveTab("browse");
+              setIsNewPriest(false);
+              setEditingPriest(null);
+              setSelectedPriest(null);
+            }}
+          />
+        );
       case "formation":
         return <FormationView />;
       case "appointments":

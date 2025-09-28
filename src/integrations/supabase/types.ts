@@ -14,7 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      priests: {
+        Row: {
+          additional_address: string | null
+          additional_info: string | null
+          address_id: string | null
+          birth_date: string | null
+          created_at: string
+          email: string | null
+          father_name: string | null
+          father_via: string | null
+          feast_day: string | null
+          id: string
+          mobile_1: string | null
+          mobile_2: string | null
+          mother_dv: string | null
+          mother_name: string | null
+          name: string
+          phone: string | null
+          prerana: string | null
+          s_no: string | null
+          updated_at: string
+        }
+        Insert: {
+          additional_address?: string | null
+          additional_info?: string | null
+          address_id?: string | null
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          father_name?: string | null
+          father_via?: string | null
+          feast_day?: string | null
+          id?: string
+          mobile_1?: string | null
+          mobile_2?: string | null
+          mother_dv?: string | null
+          mother_name?: string | null
+          name: string
+          phone?: string | null
+          prerana?: string | null
+          s_no?: string | null
+          updated_at?: string
+        }
+        Update: {
+          additional_address?: string | null
+          additional_info?: string | null
+          address_id?: string | null
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          father_name?: string | null
+          father_via?: string | null
+          feast_day?: string | null
+          id?: string
+          mobile_1?: string | null
+          mobile_2?: string | null
+          mother_dv?: string | null
+          mother_name?: string | null
+          name?: string
+          phone?: string | null
+          prerana?: string | null
+          s_no?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
